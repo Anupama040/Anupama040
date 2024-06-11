@@ -1,0 +1,48 @@
+-- Create Guests Table
+CREATE TABLE Guests (
+    guest_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    phone VARCHAR(20),
+    address VARCHAR(255)
+);
+
+-- Create Rooms Table
+CREATE TABLE Rooms (
+    room_number INT PRIMARY KEY,
+    room_type VARCHAR(50),
+    rate DECIMAL(10, 2),
+    capacity INT,
+    status ENUM('Occupied', 'Vacant') DEFAULT 'Vacant'
+);
+
+-- Create Bookings Table
+CREATE TABLE Bookings (
+    booking_id INT AUTO_INCREMENT PRIMARY KEY,
+    guest_id INT,
+    room_number INT,
+    check_in_date DATE,
+    check_out_date DATE,
+    booking_status ENUM('Confirmed', 'Cancelled') DEFAULT 'Confirmed',
+    FOREIGN KEY (guest_id) REFERENCES Guests(guest_id),
+    FOREIGN KEY (room_number) REFERENCES Rooms(room_number)
+);
+
+-- Create Payments Table
+CREATE TABLE Payments (
+    payment_id INT AUTO_INCREMENT PRIMARY KEY,
+    booking_id INT,
+    amount DECIMAL(10, 2),
+    payment_date DATE,
+    payment_method VARCHAR(50),
+    FOREIGN KEY (booking_id) REFERENCES Bookings(booking_id)
+);
+
+-- Create Staff Table
+CREATE TABLE Staff (
+    staff_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    role VARCHAR(100),
+    email VARCHAR(100),
+    phone VARCHAR(20)
+);
